@@ -25,7 +25,6 @@ def test_clean_notebook_with_version(
         nb_clean.clean_notebook(dirty_notebook_with_version) == clean_notebook
     )
 
-
 def test_clean_notebook_remove_empty_cells(
     clean_notebook_with_empty_cells: nbformat.NotebookNode,
     clean_notebook_without_empty_cells: nbformat.NotebookNode,

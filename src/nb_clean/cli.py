@@ -110,6 +110,7 @@ def check(args: argparse.Namespace) -> None:
             notebook,
             remove_empty_cells=args.remove_empty_cells,
             preserve_cell_metadata=args.preserve_cell_metadata,
+            preserve_nb_metadata=args.preserve_nb_metadata,
             preserve_cell_outputs=args.preserve_cell_outputs,
             filename=name,
         )
@@ -146,6 +147,7 @@ def clean(args: argparse.Namespace) -> None:
             notebook,
             remove_empty_cells=args.remove_empty_cells,
             preserve_cell_metadata=args.preserve_cell_metadata,
+            preserve_nb_metadata=args.preserve_nb_metadata,
             preserve_cell_outputs=args.preserve_cell_outputs,
         )
         nbformat.write(notebook, output)
@@ -186,6 +188,12 @@ def parse_args(args: List[str]) -> argparse.Namespace:
         default=None,
         nargs="*",
         help="preserve cell metadata, all unless fields are specified",
+    )
+    add_filter_parser.add_argument(
+        "-n",
+        "--preserve-nb-metadata",
+        action="store_true",
+        help="preserve notebook-wide metadata",
     )
     add_filter_parser.add_argument(
         "-o",
@@ -229,6 +237,12 @@ def parse_args(args: List[str]) -> argparse.Namespace:
         help="preserve cell metadata, all unless fields are specified",
     )
     check_parser.add_argument(
+        "-n",
+        "--preserve-nb-metadata",
+        action="store_true",
+        help="preserve notebook-wide metadata",
+    )
+    check_parser.add_argument(
         "-o",
         "--preserve-cell-outputs",
         action="store_true",
@@ -259,6 +273,12 @@ def parse_args(args: List[str]) -> argparse.Namespace:
         default=None,
         nargs="*",
         help="preserve cell metadata, all unless fields are specified",
+    )
+    clean_parser.add_argument(
+        "-n",
+        "--preserve-nb-metadata",
+        action="store_true",
+        help="preserve notebook-wide metadata",
     )
     clean_parser.add_argument(
         "-o",

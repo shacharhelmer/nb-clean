@@ -148,6 +148,7 @@ def check_notebook(
     notebook: nbformat.NotebookNode,
     remove_empty_cells: bool = False,
     preserve_cell_metadata: Union[Collection[str], None] = None,
+    preserve_nb_metadata: bool = False,
     preserve_cell_outputs: bool = False,
     filename: str = "notebook",
 ) -> bool:
@@ -210,9 +211,8 @@ def check_notebook(
                 print(f"{prefix}: outputs")
                 is_clean = False
 
-    with contextlib.suppress(KeyError):
-        _ = notebook["metadata"]["language_info"]["version"]
-        print(f"{filename} metadata: language_info.version")
+    if notebook['metadata'] != {} and not preserve_nb_metadata:
+        print(f"{filename}: notebook metadata")        
         is_clean = False
 
     return is_clean
@@ -222,6 +222,7 @@ def clean_notebook(
     notebook: nbformat.NotebookNode,
     remove_empty_cells: bool = False,
     preserve_cell_metadata: Union[Collection[str], None] = None,
+    preserve_nb_metadata: bool = False,
     preserve_cell_outputs: bool = False,
 ) -> nbformat.NotebookNode:
     """Clean notebook of execution counts, metadata, and outputs.
@@ -237,6 +238,8 @@ def clean_notebook(
         If [], preserve all cell metadata.
         (This corresponds to the `-m` CLI option without specifying any fields.)
         If list of str, these are the cell metadata fields to preserve.
+    preserve_nb_metadata : bool, default False
+        If True, preserve notebook metadata.
     preserve_cell_outputs : bool, default False
         If True, preserve cell outputs.
 
@@ -267,7 +270,7 @@ def clean_notebook(
             else:
                 cell["outputs"] = []
 
-    with contextlib.suppress(KeyError):
-        del notebook["metadata"]["language_info"]["version"]
+    if not preserve_nb_metadata:
+        notebook['metadata'] = {}
 
     return notebook
