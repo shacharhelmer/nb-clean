@@ -128,8 +128,9 @@ def clean(args: argparse.Namespace) -> None:
     args : argparse.Namespace
         Arguments parsed from the command line. If args.remove_empty_cells
         is True, check for empty cells. If args.preserve_cell_metadata is
-        True, don't clean cell metadata. If args.preserve_cell_outputs is True,
-        don't clean cell outputs.
+        True, don't clean cell metadata. If args.preserve_nb_metadata is True
+        don't clean general notebook metadata. If args.preserve_cell_outputs 
+        is True, don't clean cell outputs.
 
     """
     if args.inputs:

@@ -245,6 +245,7 @@ def test_clean_stdin(
             inputs=[],
             remove_empty_cells=False,
             preserve_cell_metadata=None,
+            preserve_nb_metadata=False,
             preserve_cell_outputs=False,
         )
     )
@@ -256,6 +257,7 @@ def test_clean_stdin(
         dirty_notebook,
         remove_empty_cells=False,
         preserve_cell_metadata=None,
+        preserve_nb_metadata=False,
         preserve_cell_outputs=False,
     )
     assert capsys.readouterr().out.strip() == nbformat.writes(clean_notebook)
@@ -268,6 +270,7 @@ def test_clean_stdin(
         "inputs",
         "remove_empty_cells",
         "preserve_cell_metadata",
+        "preserve_nb_metadata",
         "preserve_cell_outputs",
     ),
     [
@@ -319,6 +322,7 @@ def test_parse_args(  # pylint: disable=too-many-arguments
     inputs: Iterable[str],
     remove_empty_cells: bool,
     preserve_cell_metadata: Union[Collection[str], None],
+    preserve_nb_metadata,
     preserve_cell_outputs: bool,
 ) -> None:
     """Test nb_clean.cli.parse_args."""
